@@ -1,13 +1,19 @@
 <template>
-  <h2>首页</h2>
+  <div class="home">
+    <router-view />
+    <navbar>
+      <div slot="center">购物街</div>
+    </navbar>
+  </div>
 </template>
 
 <script>
-  export default {
-    name: "Home"
-  }
+import Navbar from "components/common/navbar/Navbar.vue";
+export default {
+  name: "Home",
+  components: { Navbar },
+};
 </script>
 
 <style scoped>
-
 </style>
