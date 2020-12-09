@@ -1,7 +1,6 @@
 <template>
   <div class="home">
-    <router-view />
-    <navbar>
+    <navbar class="home-nav">
       <div slot="center">购物街</div>
     </navbar>
   </div>
@@ -15,5 +14,9 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="less" scoped>
+.home-nav {
+  background-color: @color-tint;
+  color: @color-background;
+}
 </style>

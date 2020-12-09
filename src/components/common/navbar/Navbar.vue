@@ -22,14 +22,13 @@ export default {
   line-height: 44px;
   text-align: center;
   box-shadow: 0 1px 1px rgba(100, 100, 100, 0.1);
-  background-color: var(--color-tint);
-  color: #fff;
   width: 100%;
 }
-.left {
-  flex: 25%;
-}
+.left,
 .right {
-  flex: 25%;
+  width: 60px;
+}
+.center {
+  flex: 1;
 }
 </style>
