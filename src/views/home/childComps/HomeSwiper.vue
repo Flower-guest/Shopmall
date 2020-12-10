@@ -5,7 +5,9 @@
       v-for="(banner, index) in banners"
       :key="index"
     >
-      <img :src="banner.image" />
+      <a :href="banner.link">
+        <img :src="banner.image" />
+      </a>
     </swiper-slide>
     <div class="swiper-pagination" slot="pagination"></div>
   </swiper>
@@ -59,14 +61,9 @@ export default {
 <style lang="less" scoped>
 .swiper-container {
   width: 100%;
-  height: 200px;
-}
-.swiper-slide {
-  width: 100%;
-  height: 100%;
-}
-.swiper-slide img {
-  width: 100%;
-  height: 100%;
+
+  img {
+    width: 100%;
+  }
 }
 </style>
