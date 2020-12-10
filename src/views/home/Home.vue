@@ -4,34 +4,38 @@
       <div slot="center">购物街</div>
     </navbar>
     <home-swiper :banners="banners"></home-swiper>
+    <recommend-view :recommends="recommends" />
   </div>
 </template>
 
 <script>
 import Navbar from "components/common/navbar/Navbar";
-import HomeSwiper from "./childComps/HomeSwiper"
+import HomeSwiper from "./childComps/HomeSwiper";
+import RecommendView from "./childComps/RecommendView.vue";
 
-import { getHomeMultidata } from 'network/home'
+import { getHomeMultidata } from "network/home";
+
 export default {
   name: "Home",
-  data(){
+  data() {
     return {
       banners: [],
-      recommends: []
-    }
+      recommends: [],
+    };
   },
-  components: { 
+  components: {
     Navbar,
-    HomeSwiper 
+    HomeSwiper,
+    RecommendView,
   },
-   created(){
-      getHomeMultidata()
-      .then(res => {
+  created() {
+    getHomeMultidata()
+      .then((res) => {
         this.banners = res.data.data.banner.list;
         this.recommends = res.data.data.recommend.list;
       })
-      .catch(err => console.log(err))
-  }
+      .catch((err) => console.log(err));
+  },
 };
 </script>
 
