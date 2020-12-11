@@ -47,23 +47,11 @@ export default {
       },
     };
   },
-  methods: {
-    swipers() {
-      console.log(this.$refs.mySwiperA);
-    },
-  },
-  mounted() {
-    this.swipers();
-  },
 };
 </script>
 
 <style lang="less" scoped>
-.swiper-container {
+img {
   width: 100%;
-
-  img {
-    width: 100%;
-  }
 }
 </style>

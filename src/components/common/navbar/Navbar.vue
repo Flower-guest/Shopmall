@@ -14,12 +14,16 @@ export default {
 
 <style lang="less" scoped>
 .nav-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
   display: flex;
   height: 44px;
   line-height: 44px;
   text-align: center;
   box-shadow: 0 1px 1px rgba(100, 100, 100, 0.1);
   width: 100%;
+  z-index: 99;
 
   .left,
   .right {
