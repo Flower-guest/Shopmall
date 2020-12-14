@@ -17,12 +17,12 @@
 <script>
 // 私有组件
 import HomeSwiper from "./childComps/HomeSwiper";
-import RecommendView from "./childComps/RecommendView.vue";
-import FeatureView from "./childComps/FeatureView.vue";
+import RecommendView from "./childComps/RecommendView";
+import FeatureView from "./childComps/FeatureView";
 // 公共组件
 import Navbar from "components/common/navbar/Navbar";
-import TabControl from "components/content/tabControl/TabControl.vue";
-
+import TabControl from "components/content/tabControl/TabControl";
+// axios请求
 import { getHomeMultidata, getHomeGoods } from "network/home";
 
 export default {
@@ -101,7 +101,6 @@ export default {
 .home {
   width: 100%;
   padding-top: 44px;
-  margin-bottom: 50px;
   height: 1800px;
   .home-nav {
     background-color: @color-tint;
