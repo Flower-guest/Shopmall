@@ -11,6 +11,7 @@
       class="tab-control"
       @title-click="titleType"
     />
+    <goods-list :goods="showGoods" />
   </div>
 </template>
 
@@ -22,6 +23,7 @@ import FeatureView from "./childComps/FeatureView";
 // 公共组件
 import Navbar from "components/common/navbar/Navbar";
 import TabControl from "components/content/tabControl/TabControl";
+import GoodsList from "components/content/goods/GoodsList";
 // axios请求
 import { getHomeMultidata, getHomeGoods } from "network/home";
 
@@ -54,6 +56,7 @@ export default {
     RecommendView,
     FeatureView,
     TabControl,
+    GoodsList,
   },
   created() {
     this.getHomeMultidata();
@@ -62,14 +65,9 @@ export default {
     this.getHomeGoods("sell");
   },
   methods: {
-    getHomeMultidata() {
-      getHomeMultidata()
-        .then((res) => {
-          this.banners = res.data.data.banner.list;
-          this.recommends = res.data.data.recommend.list;
-        })
-        .catch((err) => console.log(err));
-    },
+    /**
+    事件监听方法
+     */
     titleType(index) {
       switch (index) {
         case 0:
@@ -82,16 +80,31 @@ export default {
           this.currentType = "sell";
           break;
       }
-      this.getHomeGoods(this.currentType);
+    },
+    /* 
+    网络请求方法
+     */
+    getHomeMultidata() {
+      getHomeMultidata()
+        .then((res) => {
+          this.banners = res.data.data.banner.list;
+          this.recommends = res.data.data.recommend.list;
+        })
+        .catch((err) => console.log(err));
     },
     getHomeGoods(type) {
       let page = this.goods[type].page + 1;
       getHomeGoods(type, page)
         .then((res) => {
-          this.goods[type].list.push(...res.data.list);
+          this.goods[type].list.push(...res.data.data.list);
           this.goods[type].page += 1;
         })
         .catch((err) => console.log(err));
+    },
+  },
+  computed: {
+    showGoods() {
+      return this.goods[this.currentType].list;
     },
   },
 };
@@ -101,7 +114,6 @@ export default {
 .home {
   width: 100%;
   padding-top: 44px;
-  height: 1800px;
   .home-nav {
     background-color: @color-tint;
     color: @color-background;
