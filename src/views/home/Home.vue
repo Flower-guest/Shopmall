@@ -3,7 +3,13 @@
     <navbar class="home-nav">
       <div slot="center">购物街</div>
     </navbar>
-    <b-scroll class="content">
+    <b-scroll
+      class="content"
+      ref="scroll"
+      @position="showBackTop"
+      :probe-type="3"
+      :pull-up-load="true"
+    >
       <home-swiper :banners="banners"></home-swiper>
       <recommend-view :recommends="recommends" />
       <feature-view />
@@ -14,6 +20,7 @@
       />
       <goods-list :goods="showGoods" />
     </b-scroll>
+    <back-top v-show="isShowBackTop" @click.native="backTop" />
   </div>
 </template>
 
@@ -23,15 +30,15 @@ import HomeSwiper from "./childComps/HomeSwiper";
 import RecommendView from "./childComps/RecommendView";
 import FeatureView from "./childComps/FeatureView";
 // 公共组件
-import Navbar from "components/common/navbar/Navbar";
+import BackTop from "components/content/backtop/BackTop";
 import TabControl from "components/content/tabControl/TabControl";
 import GoodsList from "components/content/goods/GoodsList";
+import Navbar from "components/common/navbar/Navbar";
 import BScroll from "components/common/scroll/BScroll";
 // axios请求
 import { getHomeMultidata, getHomeGoods } from "network/home";
 
 export default {
-  name: "Home",
   data() {
     return {
       banners: [],
@@ -51,7 +58,7 @@ export default {
         },
       },
       currentType: "pop",
-      scroll: null,
+      isShowBackTop: false,
     };
   },
   components: {
@@ -62,6 +69,7 @@ export default {
     TabControl,
     GoodsList,
     BScroll,
+    BackTop,
   },
   created() {
     this.getHomeMultidata();
@@ -70,9 +78,7 @@ export default {
     this.getHomeGoods("sell");
   },
   methods: {
-    /**
-    事件监听方法
-     */
+    /**事件监听方法*/
     titleType(index) {
       switch (index) {
         case 0:
@@ -86,9 +92,13 @@ export default {
           break;
       }
     },
-    /* 
-    网络请求方法
-     */
+    showBackTop(position) {
+      this.isShowBackTop = -position.y > 1000;
+    },
+    backTop() {
+      this.$refs.scroll.scrollTo(0, 0, 800);
+    },
+    /* 网络请求方法*/
     getHomeMultidata() {
       getHomeMultidata()
         .then((res) => {
