@@ -3,15 +3,17 @@
     <navbar class="home-nav">
       <div slot="center">购物街</div>
     </navbar>
-    <home-swiper :banners="banners"></home-swiper>
-    <recommend-view :recommends="recommends" />
-    <feature-view />
-    <tab-control
-      :titles="['流行', '新款', '精选']"
-      class="tab-control"
-      @title-click="titleType"
-    />
-    <goods-list :goods="showGoods" />
+    <b-scroll class="content">
+      <home-swiper :banners="banners"></home-swiper>
+      <recommend-view :recommends="recommends" />
+      <feature-view />
+      <tab-control
+        :titles="['流行', '新款', '精选']"
+        class="tab-control"
+        @title-click="titleType"
+      />
+      <goods-list :goods="showGoods" />
+    </b-scroll>
   </div>
 </template>
 
@@ -24,6 +26,7 @@ import FeatureView from "./childComps/FeatureView";
 import Navbar from "components/common/navbar/Navbar";
 import TabControl from "components/content/tabControl/TabControl";
 import GoodsList from "components/content/goods/GoodsList";
+import BScroll from "components/common/scroll/BScroll";
 // axios请求
 import { getHomeMultidata, getHomeGoods } from "network/home";
 
@@ -48,6 +51,7 @@ export default {
         },
       },
       currentType: "pop",
+      scroll: null,
     };
   },
   components: {
@@ -57,6 +61,7 @@ export default {
     FeatureView,
     TabControl,
     GoodsList,
+    BScroll,
   },
   created() {
     this.getHomeMultidata();
@@ -112,16 +117,21 @@ export default {
 
 <style lang="less" scoped>
 .home {
+  height: 100vh;
   width: 100%;
-  padding-top: 44px;
+  padding: 44px 0 49px;
+  position: relative;
   .home-nav {
     background-color: @color-tint;
     color: @color-background;
   }
-  .tab-control {
-    position: -webkit-sticky;
-    position: sticky;
+  .content {
+    overflow: hidden;
+    position: absolute;
     top: 44px;
+    bottom: 49px;
+    left: 0;
+    right: 0;
   }
 }
 </style>

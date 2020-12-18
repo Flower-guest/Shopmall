@@ -1,13 +1,15 @@
-<template>
-  <h2>分类</h2>
-</template>
+<template></template>
 
 <script>
-  export default {
-    name: "Category"
-  }
+export default {
+  name: "Category",
+  data() {
+    return {};
+  },
+  mounted() {},
+  methods: {},
+};
 </script>
 
 <style scoped>
-
 </style>
