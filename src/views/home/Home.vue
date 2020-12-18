@@ -39,10 +39,22 @@ import BScroll from "components/common/scroll/BScroll";
 import { getHomeMultidata, getHomeGoods } from "network/home";
 
 export default {
+  components: {
+    Navbar,
+    HomeSwiper,
+    RecommendView,
+    FeatureView,
+    TabControl,
+    GoodsList,
+    BScroll,
+    BackTop,
+  },
   data() {
     return {
       banners: [],
       recommends: [],
+      currentType: "pop",
+      isShowBackTop: false,
       goods: {
         pop: {
           page: 0,
@@ -57,19 +69,7 @@ export default {
           list: [],
         },
       },
-      currentType: "pop",
-      isShowBackTop: false,
     };
-  },
-  components: {
-    Navbar,
-    HomeSwiper,
-    RecommendView,
-    FeatureView,
-    TabControl,
-    GoodsList,
-    BScroll,
-    BackTop,
   },
   created() {
     this.getHomeMultidata();
