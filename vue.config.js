@@ -1,9 +1,11 @@
 const path = require('path')
-function resolve(dir) { 
-  return path.join(__dirname,dir)
+
+function resolve(dir) {
+  return path.join(__dirname, dir)
 }
 
 module.exports = {
+  // 图片路径
   configureWebpack: {
     resolve: {
       alias: {
@@ -15,10 +17,11 @@ module.exports = {
       }
     }
   },
+  // less
   pluginOptions: {
     'style-resources-loader': {
       preProcessor: 'less',
-      patterns:[path.resolve(__dirname,'./src/assets/css/base.less')]
+      patterns: [path.resolve(__dirname, './src/assets/css/base.less')]
     }
   }
 }
