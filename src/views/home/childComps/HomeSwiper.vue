@@ -6,7 +6,7 @@
       :key="index"
     >
       <a :href="banner.link">
-        <img :src="banner.image" />
+        <img :src="banner.image" @load="imgLoad" />
       </a>
     </swiper-slide>
     <div class="swiper-pagination" slot="pagination"></div>
@@ -32,6 +32,7 @@ export default {
   },
   data() {
     return {
+      isLoad: false,
       swiperOption: {
         spaceBetween: 30,
         centeredSlides: true,
@@ -46,6 +47,14 @@ export default {
         },
       },
     };
+  },
+  methods: {
+    imgLoad() {
+      if (!this.isLoad) {
+        this.$emit("swiperImgLoad");
+        this.isLoad = true;
+      }
+    },
   },
 };
 </script>

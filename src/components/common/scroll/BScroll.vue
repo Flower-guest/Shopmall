@@ -38,11 +38,17 @@ export default {
       });
 
       this.scroll.on("pullingUp", () => {
-        this.scroll.refresh();
+        this.$emit("pullingUp");
       });
     },
     scrollTo(x, y, time = 300) {
-      this.scroll.scrollTo(x, y, time);
+      this.scroll && this.scroll.scrollTo(x, y, time);
+    },
+    finishPullUp() {
+      this.scroll && this.scroll.finishPullUp();
+    },
+    refresh() {
+      this.scroll && this.scroll.refresh();
     },
   },
   mounted() {
