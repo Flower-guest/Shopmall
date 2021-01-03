@@ -1,5 +1,5 @@
 <template>
-  <div class="good-item">
+  <div class="good-item" @click="itemClick">
     <div class="img">
       <img :src="gooditem.show.img" @load="imgLoad" />
     </div>
@@ -25,6 +25,9 @@ export default {
     imgLoad() {
       // 事件总线，发送监听图片加载事件
       this.$bus.$emit("itemImgLoad");
+    },
+    itemClick() {
+      console.log("sss");
     },
   },
 };

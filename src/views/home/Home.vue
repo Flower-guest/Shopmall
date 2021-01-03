@@ -7,7 +7,7 @@
       :titles="['流行', '新款', '精选']"
       class="tab-control"
       @title-click="titleType"
-      ref="tabControl"
+      ref="tabControl1"
       v-show="isFlex"
     />
     <b-scroll
@@ -28,7 +28,7 @@
         :titles="['流行', '新款', '精选']"
         class="tab-control"
         @title-click="titleType"
-        ref="tabControl"
+        ref="tabControl2"
       />
       <goods-list :goods="showGoods" />
     </b-scroll>
@@ -70,6 +70,7 @@ export default {
       isShowBackTop: false,
       isFlex: false,
       topHeight: null,
+      scollY: null,
       goods: {
         pop: {
           page: 0,
@@ -92,8 +93,16 @@ export default {
     this.getHomeGoods("new");
     this.getHomeGoods("sell");
   },
+  // 记录浏览器跳转时得位置
+  activated() {
+    this.$refs.scroll.scrollTo(0, this.scollY, 0);
+    this.$refs.scroll.refresh();
+  },
+  deactivated() {
+    this.scollY = this.$refs.scroll.getScrollY();
+  },
+  // 监听item图片加载完，  事件总线
   mounted() {
-    // 监听item图片加载完，  事件总线
     const refresh = debounce(this.$refs.scroll.refresh);
     this.$bus.$on("itemImgLoad", () => {
       refresh();
@@ -113,6 +122,8 @@ export default {
           this.currentType = "sell";
           break;
       }
+      this.$refs.tabControl1.currentIndex = index;
+      this.$refs.tabControl2.currentIndex = index;
     },
     showBackTop(position) {
       this.isShowBackTop = -position.y > 1000;
@@ -125,7 +136,7 @@ export default {
       this.getHomeGoods(this.currentType);
     },
     swiperImgLoad() {
-      this.topHeight = this.$refs.tabControl.$el.offsetTop;
+      this.topHeight = this.$refs.tabControl2.$el.offsetTop;
     },
     /* 网络请求方法*/
     getHomeMultidata() {
