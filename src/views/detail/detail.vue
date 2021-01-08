@@ -3,7 +3,7 @@
     <detail-nav-bar class="detail-nav" />
     <b-scroll :probe-type="3" :pull-up-load="true" class="content">
       <detail-swiper :top-images="topImages"></detail-swiper>
-      <detail-goods-info :detail-info="goods"></detail-goods-info>
+      <detail-goods-info :goods="goods"></detail-goods-info>
     </b-scroll>
   </div>
 </template>
@@ -37,7 +37,6 @@ export default {
 
     getDetail(this.iid)
       .then((res) => {
-        console.log(res);
         // 获取轮播图照片
         const data = res.data.result;
         this.topImages = data.itemInfo.topImages;

@@ -63,4 +63,7 @@ export default {
 img {
   width: 100%;
 }
+.swiper-container {
+  --swiper-pagination-color: @color-tint; /* 两种都可以 */
+}
 </style>
