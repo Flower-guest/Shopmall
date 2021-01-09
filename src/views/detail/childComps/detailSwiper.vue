@@ -47,13 +47,13 @@ export default {
 
 <style lang="less" scoped>
 .detail-swiper {
-  width: 100%;
   height: 300px;
   overflow: hidden;
   img {
     width: 100%;
   }
 }
+
 .swiper-container {
   --swiper-pagination-color: @color-tint; /* 两种都可以 */
 }

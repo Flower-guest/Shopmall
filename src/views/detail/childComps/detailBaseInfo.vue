@@ -1,5 +1,5 @@
 <template>
-  <div class="detail-goods-info" v-if="Object.keys(goods).length !== 0">
+  <div class="detail-base-info" v-if="Object.keys(goods).length !== 0">
     <div>{{ goods.title }}</div>
     <div class="info-price">
       <span class="n-price">{{ goods.newPrice }}</span>
@@ -9,7 +9,7 @@
     <div class="info-other">
       <span>{{ goods.columns[0] }}</span>
       <span>{{ goods.columns[1] }}</span>
-      <span>{{ goods.services[4].name }}</span>
+      <span>{{ goods.services[goods.services.length - 1].name }}</span>
     </div>
     <div class="info-serves">
       <span
@@ -35,7 +35,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.detail-goods-info {
+.detail-base-info {
   margin-top: 15px;
   padding: 0 8px;
 

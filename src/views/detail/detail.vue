@@ -3,7 +3,7 @@
     <detail-nav-bar class="detail-nav" />
     <b-scroll :probe-type="3" :pull-up-load="true" class="content">
       <detail-swiper :top-images="topImages"></detail-swiper>
-      <detail-goods-info :goods="goods"></detail-goods-info>
+      <detail-base-info :goods="goods"></detail-base-info>
     </b-scroll>
   </div>
 </template>
@@ -11,7 +11,7 @@
 <script>
 import DetailNavBar from "./childComps/detailNavBar.vue";
 import DetailSwiper from "./childComps/detailSwiper.vue";
-import DetailGoodsInfo from "./childComps/detailGoodsInfo.vue";
+import DetailBaseInfo from "./childComps/detailBaseInfo.vue";
 import BScroll from "components/common/scroll/BScroll.vue";
 
 // 网络请求
@@ -22,7 +22,7 @@ export default {
     DetailNavBar,
     DetailSwiper,
     BScroll,
-    DetailGoodsInfo,
+    DetailBaseInfo,
   },
   data() {
     return {
@@ -37,6 +37,7 @@ export default {
 
     getDetail(this.iid)
       .then((res) => {
+        console.log(res);
         // 获取轮播图照片
         const data = res.data.result;
         this.topImages = data.itemInfo.topImages;
