@@ -23,3 +23,14 @@ export class Goods {
     this.nowPrice = itemInfo.highNowPrice;
   }
 }
+
+export class Shop {
+  constructor(shopInfo) {
+    this.name = shopInfo.name;
+    this.cSells = shopInfo.cSells;
+    this.cFans = shopInfo.cFans;
+    this.cGoods = shopInfo.cGoods;
+    this.shopLogo = shopInfo.shopLogo;
+    this.score = shopInfo.score;
+  }
+}

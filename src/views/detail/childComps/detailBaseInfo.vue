@@ -38,7 +38,7 @@ export default {
 .detail-base-info {
   margin-top: 15px;
   padding: 0 8px;
-
+  border-bottom: 5px solid @color-border;
   .info-price {
     margin-top: 10px;
 

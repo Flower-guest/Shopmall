@@ -4,6 +4,7 @@
     <b-scroll :probe-type="3" :pull-up-load="true" class="content">
       <detail-swiper :top-images="topImages"></detail-swiper>
       <detail-base-info :goods="goods"></detail-base-info>
+      <detail-shop-info :shop="shop" />
     </b-scroll>
   </div>
 </template>
@@ -15,7 +16,8 @@ import DetailBaseInfo from "./childComps/detailBaseInfo.vue";
 import BScroll from "components/common/scroll/BScroll.vue";
 
 // 网络请求
-import { getDetail, Goods } from "network/detail.js";
+import { getDetail, Goods, Shop } from "network/detail.js";
+import DetailShopInfo from "./childComps/detailShopInfo.vue";
 export default {
   name: "detail",
   components: {
@@ -23,12 +25,14 @@ export default {
     DetailSwiper,
     BScroll,
     DetailBaseInfo,
+    DetailShopInfo,
   },
   data() {
     return {
       iid: null,
       topImages: [],
       goods: {},
+      shop: {},
     };
   },
   methods: {},
@@ -41,12 +45,14 @@ export default {
         // 获取轮播图照片
         const data = res.data.result;
         this.topImages = data.itemInfo.topImages;
-
+        // 商品信息
         this.goods = new Goods(
           data.itemInfo,
           data.columns,
           data.shopInfo.services
         );
+        // 店铺信息
+        this.shop = new Shop(data.shopInfo);
       })
       .catch((err) => console.log(err));
   },
@@ -58,6 +64,6 @@ export default {
   position: relative;
 }
 .content {
-  height: calc(100% - 44px);
+  height: calc(100% - 95px);
 }
 </style>
