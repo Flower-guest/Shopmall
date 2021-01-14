@@ -1,0 +1,70 @@
+<template>
+  <div class="good-info">
+    <div class="info-desc">
+      <div class="start"></div>
+      <div class="desc">{{ detailInfo.desc }}</div>
+      <div class="end"></div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  props: {
+    detailInfo: {
+      type: Object,
+    },
+  },
+};
+</script>
+
+<style lang="less" scoped>
+.good-info {
+  padding: 20px 0;
+  border-bottom: 5px solid #f2f5f8;
+
+  .info-desc {
+    padding: 0 15px;
+
+    .start,
+    .end {
+      width: 90px;
+      height: 1px;
+      background-color: #a3a3a5;
+      position: relative;
+    }
+
+    .start {
+      float: left;
+    }
+
+    .end {
+      float: right;
+    }
+
+    .start::before,
+    .end::after {
+      content: "";
+      position: absolute;
+      width: 5px;
+      height: 5px;
+      background-color: #333;
+    }
+
+    .start::before {
+      top: -5px;
+    }
+
+    .end::after {
+      right: 0;
+      bottom: 0;
+    }
+
+    .desc {
+      padding: 15px 0;
+      font-size: 14px;
+      color: @color-text;
+    }
+  }
+}
+</style>

@@ -33,10 +33,11 @@ export default {
         pullUpLoad: this.pullUpLoad,
         click: true,
       });
-
       this.scroll.on("scroll", (position) => {
         this.$emit("position", position);
       });
+
+      console.log(this.scroll);
 
       this.scroll.on("pullingUp", () => {
         this.$emit("pullingUp");

@@ -27,6 +27,7 @@ export default {
   },
   data() {
     return {
+      isLoad: false,
       swiperOption: {
         spaceBetween: 30,
         centeredSlides: true,
