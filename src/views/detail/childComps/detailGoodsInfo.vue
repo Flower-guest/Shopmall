@@ -1,9 +1,17 @@
 <template>
-  <div class="good-info">
+  <div class="good-info" v-if="Object.keys(detailInfo).length !== 0">
     <div class="info-desc">
       <div class="start"></div>
       <div class="desc">{{ detailInfo.desc }}</div>
       <div class="end"></div>
+    </div>
+    <div class="info-key">{{ detailInfo.detailImage[0].key }}</div>
+    <div
+      class="info-list"
+      v-for="(list, index) in detailInfo.detailImage[0].list"
+      :key="index"
+    >
+      <img :src="list" />
     </div>
   </div>
 </template>
@@ -64,6 +72,20 @@ export default {
       padding: 15px 0;
       font-size: 14px;
       color: @color-text;
+    }
+  }
+
+  .info-key {
+    margin: 10px 0 10px 15px;
+    color: #333;
+    font-size: 15px;
+  }
+
+  .info-list {
+    width: 100%;
+
+    img {
+      width: 100%;
     }
   }
 }

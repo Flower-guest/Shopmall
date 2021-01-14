@@ -73,7 +73,7 @@ export default {
   mounted() {
     setTimeout(() => {
       this.$refs.scrolls.refresh();
-    }, 3000);
+    }, 1000);
   },
 };
 </script>
