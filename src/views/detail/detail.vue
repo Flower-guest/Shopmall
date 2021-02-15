@@ -5,12 +5,12 @@
       :probe-type="3"
       :pull-up-load="true"
       class="contents"
-      ref="scrolls"
+      ref="scroll"
     >
       <detail-swiper :top-images="topImages"></detail-swiper>
       <detail-base-info :goods="goods"></detail-base-info>
       <detail-shop-info :shop="shop" />
-      <detail-goods-info :detail-info="detailInfo" />
+      <detail-goods-info :detail-info="detailInfo" @imageLoad="imageLoad" />
     </b-scroll>
     <detail-bottom-bar />
   </div>
@@ -27,7 +27,7 @@ import DetailGoodsInfo from "./childComps/detailGoodsInfo.vue";
 import BScroll from "components/common/scroll/BScroll.vue";
 import { debounce } from "common/utils.js";
 // 网络请求
-import { getDetail, Goods, Shop } from "network/detail.js";
+import { getDetail, Goods, Shop, ParamInfo } from "network/detail.js";
 export default {
   name: "detail",
   components: {
@@ -46,17 +46,19 @@ export default {
       goods: {},
       shop: {},
       detailInfo: {},
+      paramInfo: {},
     };
   },
 
   created() {
     this.iid = this.$route.params.iid;
-
+    //请求数据
     getDetail(this.iid)
       .then((res) => {
         console.log(res);
         // 获取轮播图照片
         const data = res.data.result;
+        //获取顶部信息
         this.topImages = data.itemInfo.topImages;
         // 商品信息
         this.goods = new Goods(
@@ -66,14 +68,21 @@ export default {
         );
         // 店铺信息
         this.shop = new Shop(data.shopInfo);
+        // 获取商品信息
         this.detailInfo = data.detailInfo;
+        // 保存参数信息
+        this.paramInfo = new ParamInfo(
+          data.itemParams.info,
+          data.itemParams.rule
+        );
       })
       .catch((err) => console.log(err));
   },
-  mounted() {
-    setTimeout(() => {
-      this.$refs.scrolls.refresh();
-    }, 1000);
+
+  methods: {
+    imageLoad() {
+      this.$refs.scroll.refresh();
+    },
   },
 };
 </script>

@@ -11,7 +11,7 @@
       v-for="(list, index) in detailInfo.detailImage[0].list"
       :key="index"
     >
-      <img :src="list" />
+      <img :src="list" @load="loadImg" />
     </div>
   </div>
 </template>
@@ -21,6 +21,26 @@ export default {
   props: {
     detailInfo: {
       type: Object,
+    },
+  },
+
+  data() {
+    return {
+      counter: 0,
+      imagesLength: 0,
+    };
+  },
+  methods: {
+    loadImg() {
+      if (++this.counter === this.imagesLength) {
+        this.$emit("imageLoad");
+      }
+    },
+  },
+  watch: {
+    detailInfo() {
+      // 获取图片的个数
+      this.imagesLength = this.detailInfo.detailImage[0].list.length;
     },
   },
 };
