@@ -11,6 +11,8 @@
       <detail-base-info :goods="goods"></detail-base-info>
       <detail-shop-info :shop="shop" />
       <detail-goods-info :detail-info="detailInfo" @imageLoad="imageLoad" />
+      <detail-param-info :param-info="paramInfo" />
+      <detail-comment-info :comment-info="commentInfo" />
     </b-scroll>
     <detail-bottom-bar />
   </div>
@@ -23,6 +25,8 @@ import DetailBaseInfo from "./childComps/detailBaseInfo.vue";
 import DetailShopInfo from "./childComps/detailShopInfo.vue";
 import DetailBottomBar from "./childComps/detailBottomBar.vue";
 import DetailGoodsInfo from "./childComps/detailGoodsInfo.vue";
+import DetailParamInfo from "./childComps/detailParamInfo.vue";
+import DetailCommentInfo from "./childComps/detailCommentInfo.vue";
 
 import BScroll from "components/common/scroll/BScroll.vue";
 import { debounce } from "common/utils.js";
@@ -38,6 +42,8 @@ export default {
     DetailShopInfo,
     DetailBottomBar,
     DetailGoodsInfo,
+    DetailParamInfo,
+    DetailCommentInfo,
   },
   data() {
     return {
@@ -47,6 +53,7 @@ export default {
       shop: {},
       detailInfo: {},
       paramInfo: {},
+      commentInfo: {},
     };
   },
 
@@ -75,6 +82,10 @@ export default {
           data.itemParams.info,
           data.itemParams.rule
         );
+        // 获取评论信息
+        if (data.rate.list) {
+          this.commentInfo = data.rate.list[0];
+        }
       })
       .catch((err) => console.log(err));
   },
