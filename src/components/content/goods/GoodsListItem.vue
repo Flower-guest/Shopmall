@@ -1,7 +1,7 @@
 <template>
   <div class="good-item" @click="itemClick">
     <div class="img">
-      <img :src="gooditem.show.img" @load="imgLoad" />
+      <img :src="showImage" @load="imgLoad" />
     </div>
     <div class="good-info">
       <p>{{ gooditem.title }}</p>
@@ -24,10 +24,26 @@ export default {
   methods: {
     imgLoad() {
       // 事件总线，发送监听图片加载事件
-      this.$bus.$emit("itemImgLoad");
+      if (this.$route.path.indexOf("/home") !== -1) {
+        this.$bus.$emit("itemImgLoad");
+      } else if (this.$route.path.indexOf("/detail") !== -1) {
+        this.$bus.$emit("detailitemImgLoad");
+      }
     },
     itemClick() {
-      this.$router.push("/detail/" + this.gooditem.iid);
+      // this.$router.push("/detail/" + this.gooditem.iid);
+      let iid = this.gooditem.iid || this.gooditem.item_id;
+      this.$router.push({
+        path: "/detail",
+        query: {
+          iid: iid,
+        },
+      });
+    },
+  },
+  computed: {
+    showImage() {
+      return this.gooditem.image || this.gooditem.show.img;
     },
   },
 };
