@@ -1,6 +1,10 @@
 <template>
   <div class="detail">
-    <detail-nav-bar class="detail-nav" />
+    <detail-nav-bar
+      class="detail-nav"
+      @navposition="navposition"
+      ref="detailnav"
+    />
     <b-scroll
       :probe-type="3"
       :pull-up-load="true"
@@ -11,10 +15,13 @@
       <detail-swiper :top-images="topImages"></detail-swiper>
       <detail-base-info :goods="goods"></detail-base-info>
       <detail-shop-info :shop="shop" />
-      <detail-goods-info :detail-info="detailInfo" />
-      <detail-param-info :param-info="paramInfo" />
-      <detail-comment-info :comment-info="commentInfo" />
-      <detail-recommend-list :recommend-list="recommendList" />
+      <detail-goods-info
+        :detail-info="detailInfo"
+        @detailImgLoad="detailImgLoad"
+      />
+      <detail-param-info ref="param" :param-info="paramInfo" />
+      <detail-comment-info ref="comment" :comment-info="commentInfo" />
+      <detail-recommend-list ref="recommend" :recommend-list="recommendList" />
     </b-scroll>
     <back-top v-show="detailShowBackTop" @click.native="back" />
     <detail-bottom-bar />
@@ -32,6 +39,7 @@ import DetailParamInfo from "./childComps/detailParamInfo.vue";
 import DetailCommentInfo from "./childComps/detailCommentInfo.vue";
 import DetailRecommendList from "./childComps/detailRecommendList.vue";
 import BScroll from "components/common/scroll/BScroll.vue";
+import { itemListenerMixin } from "common/mixin.js";
 import { debounce } from "common/utils.js";
 // 网络请求
 import {
@@ -57,6 +65,7 @@ export default {
     DetailRecommendList,
     BackTop,
   },
+  mixins: [itemListenerMixin],
   data() {
     return {
       iid: null,
@@ -68,21 +77,25 @@ export default {
       commentInfo: {},
       recommendList: [],
       detailShowBackTop: false,
+      themeTopY: [],
+      getThemeTopY: null,
     };
   },
-
   created() {
     this._getDetail();
     this._getRecommend();
-  },
-
-  mounted() {
-    let refresh = debounce(this.$refs.scroll.refresh);
-    this.$bus.$on("detailitemImgLoad", () => {
-      refresh();
+    this.getThemeTopY = debounce(() => {
+      this.themeTopY = [];
+      this.themeTopY.push(0);
+      this.themeTopY.push(this.$refs.param.$el.offsetTop - 44);
+      this.themeTopY.push(this.$refs.comment.$el.offsetTop - 44);
+      this.themeTopY.push(this.$refs.recommend.$el.offsetTop - 44);
+      this.themeTopY.push(Number.MAX_VALUE);
     });
   },
-
+  destroyed() {
+    this.$bus.$off("itemImgLoad", this.itemListenerMixin);
+  },
   methods: {
     _getDetail() {
       this.iid = this.$route.query.iid;
@@ -117,16 +130,39 @@ export default {
     },
     _getRecommend() {
       getRecommend().then((res, error) => {
-        console.log(res);
         if (error) return;
         this.recommendList = res.data.data.list;
       });
     },
+    // 1.是否显示返回  2.滚动内容显示对应标题
     contentScoroll(position) {
+      const positionY = -position.y;
+      const length = this.themeTopY.length;
       this.detailShowBackTop = -position.y > 1000;
+      for (let i = 0; i < length - 1; i++) {
+        if (
+          positionY >= this.themeTopY[i] &&
+          positionY < this.themeTopY[i + 1]
+        ) {
+          this.detailIndex(i);
+        }
+      }
     },
+    detailIndex(i) {
+      this.$refs.detailnav.currentIndex = i;
+    },
+    // 返回顶部
     back() {
       this.$refs.scroll.scrollTo(0, 0, 800);
+    },
+    // 监听详情图片加载完成
+    detailImgLoad() {
+      this.refresh();
+      this.getThemeTopY();
+    },
+    // 点击顶部导航栏跳转指定位置
+    navposition(index) {
+      this.$refs.scroll.scrollTo(0, -this.themeTopY[index], 200);
     },
   },
 };

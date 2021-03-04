@@ -47,7 +47,7 @@ import TabControl from "components/content/tabControl/TabControl";
 import GoodsList from "components/content/goods/GoodsList";
 import Navbar from "components/common/navbar/Navbar";
 import BScroll from "components/common/scroll/BScroll";
-import { debounce } from "common/utils.js";
+import { itemListenerMixin } from "common/mixin.js";
 // axios请求
 import { getHomeMultidata, getHomeGoods } from "network/home";
 
@@ -62,6 +62,7 @@ export default {
     BScroll,
     BackTop,
   },
+  mixins: [itemListenerMixin],
   data() {
     return {
       banners: [],
@@ -99,15 +100,12 @@ export default {
     this.$refs.scroll.refresh();
   },
   deactivated() {
+    // 保存Y值
     this.scollY = this.$refs.scroll.getScrollY();
+    // 取消全局事件
+    this.$bus.$off("itemImgLoad", this.homeItemListener);
   },
-  // 监听item图片加载完，  事件总线
-  mounted() {
-    const refresh = debounce(this.$refs.scroll.refresh);
-    this.$bus.$on("itemImgLoad", () => {
-      refresh();
-    });
-  },
+
   methods: {
     /**事件监听方法*/
     titleType(index) {

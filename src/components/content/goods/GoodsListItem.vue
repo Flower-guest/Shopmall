@@ -24,11 +24,7 @@ export default {
   methods: {
     imgLoad() {
       // 事件总线，发送监听图片加载事件
-      if (this.$route.path.indexOf("/home") !== -1) {
-        this.$bus.$emit("itemImgLoad");
-      } else if (this.$route.path.indexOf("/detail") !== -1) {
-        this.$bus.$emit("detailitemImgLoad");
-      }
+      this.$bus.$emit("itemImgLoad");
     },
     itemClick() {
       // this.$router.push("/detail/" + this.gooditem.iid);
