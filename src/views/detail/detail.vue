@@ -24,7 +24,7 @@
       <detail-recommend-list ref="recommend" :recommend-list="recommendList" />
     </b-scroll>
     <back-top v-show="detailShowBackTop" @click.native="back" />
-    <detail-bottom-bar />
+    <detail-bottom-bar @addToCart="addToCart" />
   </div>
 </template>
 
@@ -163,6 +163,17 @@ export default {
     // 点击顶部导航栏跳转指定位置
     navposition(index) {
       this.$refs.scroll.scrollTo(0, -this.themeTopY[index], 200);
+    },
+    // 添加购物车
+    addToCart() {
+      // 获取购物车需要展示的信息
+      const product = {};
+      product.image = this.topImages[0];
+      product.title = this.goods.title;
+      product.desc = this.goods.desc;
+      product.price = this.goods.nowPrice;
+      product.iid = this.iid;
+      this.$store.dispatch("addCarts", product);
     },
   },
 };

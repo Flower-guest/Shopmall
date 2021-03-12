@@ -1,15 +1,65 @@
-<template></template>
+<template>
+  <div class="category">
+    <navbar class="category-nav">
+      <div slot="center">商品分类</div>
+    </navbar>
+    <div class="content">
+      <cate-gory-title :title="date" class="nav-left" />
+
+      <b-scroll :probe-type="3" :pull-up-load="true"> </b-scroll>
+    </div>
+  </div>
+</template>
 
 <script>
+import Navbar from "components/common/navbar/Navbar.vue";
+import BScroll from "components/common/scroll/BScroll.vue";
+import CateGoryTitle from "./childComps/cateGoryTitle.vue";
+
+import { getTitle } from "network/category.js";
 export default {
+  components: { Navbar, BScroll, CateGoryTitle },
   name: "Category",
   data() {
-    return {};
+    return {
+      date: [],
+    };
   },
   mounted() {},
-  methods: {},
+  created() {
+    this._getTitle();
+  },
+  methods: {
+    _getTitle() {
+      getTitle()
+        .then((res) => {
+          this.date = res.data.data.category.list;
+        })
+        .catch((err) => console.log(err));
+    },
+  },
 };
 </script>
 
-<style scoped>
+<style lang="less" scoped>
+.category {
+  height: 100vh;
+  width: 100%;
+  padding: 44px 0 49px;
+  position: relative;
+
+  .category-nav {
+    background-color: @color-tint;
+    color: @color-background;
+  }
+
+  .content {
+    overflow: hidden;
+    position: absolute;
+    top: 44px;
+    bottom: 49px;
+    left: 0;
+    right: 0;
+  }
+}
 </style>
