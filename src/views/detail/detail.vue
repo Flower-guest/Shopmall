@@ -25,9 +25,6 @@
     </b-scroll>
     <back-top v-show="detailShowBackTop" @click.native="back" />
     <detail-bottom-bar @addToCart="addToCart" />
-    <div :class="{ center: isCenter }">
-      <span>已添加至购物车</span>
-    </div>
   </div>
 </template>
 
@@ -177,13 +174,7 @@ export default {
       product.desc = this.goods.desc;
       product.price = this.goods.nowPrice;
       product.iid = this.iid;
-      this.$store.dispatch("addCarts", product);
-      this.time();
-    },
-    // 弹窗显示与隐藏
-    time() {
-      this.isCenter = true;
-      setTimeout(() => (this.isCenter = false), 2000);
+      this.$store.dispatch("addCarts", product).then((res) => console.log(res));
     },
   },
 };
@@ -207,21 +198,6 @@ export default {
   .contents {
     height: calc(100% - 104px);
     overflow: hidden;
-  }
-
-  .center {
-    position: absolute;
-    height: 50px;
-    width: 160px;
-    text-align: center;
-    line-height: 50px;
-    background-color: rgba(0, 0, 0, 0.7);
-    color: #fff;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 1000000;
-    opacity: 1;
   }
 }
 </style>
