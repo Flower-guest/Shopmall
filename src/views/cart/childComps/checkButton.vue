@@ -1,10 +1,6 @@
 <template>
   <div>
-    <div
-      class="icon-selector"
-      :class="{ 'selector-active': checked }"
-      @click="selectItem"
-    >
+    <div class="icon-selector" :class="{ active: isChecked }">
       <img src="~/assets/img/cart/tick.svg" alt="" />
     </div>
   </div>
@@ -13,24 +9,9 @@
 <script>
 export default {
   props: {
-    value: {
+    isChecked: {
       type: Boolean,
       default: true,
-    },
-  },
-  data() {
-    return {
-      checked: this.value,
-    };
-  },
-  methods: {
-    selectItem: function () {
-      this.$emit("checkBtnClick");
-    },
-  },
-  watch: {
-    value: function (newValue) {
-      this.checked = newValue;
     },
   },
 };
@@ -38,17 +19,11 @@ export default {
 
 <style lang="less" scoped>
 .icon-selector {
-  position: relative;
-  margin: 0;
-  width: 18px;
-  height: 18px;
   border-radius: 50%;
   border: 2px solid #ccc;
-  cursor: pointer;
-
-  .selector-active {
-    background-color: #ff8198;
-    border-color: #ff8198;
-  }
+}
+.active {
+  background-color: #ff8198;
+  border-color: #ff8198;
 }
 </style>
