@@ -3,10 +3,9 @@
     <navbar class="category-nav">
       <div slot="center">商品分类</div>
     </navbar>
-    <div class="content">
-      <cate-gory-title :title="date" class="nav-left" />
-
-      <b-scroll :probe-type="3" :pull-up-load="true"> </b-scroll>
+    <div class="center">
+      <cate-gory-title :title="date" />
+      <!-- <b-scroll :probe-type="3" :pull-up-load="true"> </b-scroll> -->
     </div>
   </div>
 </template>
@@ -53,13 +52,8 @@ export default {
     color: @color-background;
   }
 
-  .content {
-    overflow: hidden;
-    position: absolute;
-    top: 44px;
-    bottom: 49px;
-    left: 0;
-    right: 0;
+  .center {
+    height: 100%;
   }
 }
 </style>
