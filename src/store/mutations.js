@@ -6,5 +6,16 @@ export default {
   },
   addCounter(state, payload) {
     payload.count++;
+  },
+  selectChecked(state, payload) {
+    if (payload) {
+      state.cartList.forEach((item) => {
+        item.checked = false;
+      });
+    } else {
+      state.cartList.forEach((item) => {
+        item.checked = true;
+      });
+    }
   }
 }

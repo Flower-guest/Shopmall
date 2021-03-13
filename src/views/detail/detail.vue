@@ -38,6 +38,7 @@ import DetailGoodsInfo from "./childComps/detailGoodsInfo.vue";
 import DetailParamInfo from "./childComps/detailParamInfo.vue";
 import DetailCommentInfo from "./childComps/detailCommentInfo.vue";
 import DetailRecommendList from "./childComps/detailRecommendList.vue";
+import BackTop from "components/content/backtop/BackTop.vue";
 import BScroll from "components/common/scroll/BScroll.vue";
 import { itemListenerMixin } from "common/mixin.js";
 import { debounce } from "common/utils.js";
@@ -49,7 +50,6 @@ import {
   ParamInfo,
   getRecommend,
 } from "network/detail.js";
-import BackTop from "../../components/content/backtop/BackTop.vue";
 export default {
   name: "detail",
   components: {

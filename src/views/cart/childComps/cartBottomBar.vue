@@ -3,7 +3,7 @@
     <check-button
       class="select-all"
       @click.native="checkClick"
-      :is-checked="checked"
+      :is-checked="isSelectAll"
     />
     <span>全选</span>
     <span class="total-price">合计:{{ totalPrice }} ¥</span>
@@ -16,11 +16,6 @@ import checkButton from "./checkButton.vue";
 import { mapGetters } from "vuex";
 export default {
   components: { checkButton },
-  data() {
-    return {
-      checked: true,
-    };
-  },
   computed: {
     //vuex ：辅助函数将 store 中的 getter 映射到局部计算属性
     ...mapGetters({
@@ -40,12 +35,18 @@ export default {
     cartLength() {
       return this.cartList.filter((item) => item.checked).length;
     },
+    isSelectAll() {
+      // 判断是否还有没选中的，如果有.some返回为true，如果不取反，则全选框就会被选中，所以要取反
+      return (
+        !this.cartList.length == 0 &&
+        !this.cartList.some((item) => !item.checked)
+      );
+    },
   },
   methods: {
+    // 全选与反选
     checkClick() {
-      this.cartList.forEach((item) => {
-        item.checked = true;
-      });
+      this.$store.commit("selectChecked", this.isSelectAll);
     },
   },
 };
