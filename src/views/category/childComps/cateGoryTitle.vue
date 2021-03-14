@@ -30,7 +30,7 @@ export default {
   activated() {
     setTimeout(() => {
       this.$refs.scroll.refresh();
-    }, 100);
+    }, 500);
   },
 };
 </script>
