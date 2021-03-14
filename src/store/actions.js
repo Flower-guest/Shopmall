@@ -6,11 +6,11 @@ export default {
       let product = context.state.cartList.find(item => item.iid === payload.iid);
       if (product) {
         context.commit('addCounter', product);
-        resolve('当前商品加一');
+        resolve('以添加至购物车');
       } else {
         payload.count = 1;
         context.commit('addCartList', payload);
-        resolve('添加了新得商品');
+        resolve('以添加至购物车');
 
       }
     })

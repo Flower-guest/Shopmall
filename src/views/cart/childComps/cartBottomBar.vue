@@ -7,7 +7,7 @@
     />
     <span>全选</span>
     <span class="total-price">合计:{{ totalPrice }} ¥</span>
-    <span class="buy-product">去计算({{ cartLength }})</span>
+    <span class="buy-product" @click="calcClick">去计算({{ cartLength }})</span>
   </div>
 </template>
 
@@ -47,6 +47,11 @@ export default {
     // 全选与反选
     checkClick() {
       this.$store.commit("selectChecked", this.isSelectAll);
+    },
+    calcClick() {
+      if (!this.isSelectAll) {
+        this.$toast.show("请选择购买的商品");
+      }
     },
   },
 };

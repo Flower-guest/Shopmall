@@ -174,7 +174,9 @@ export default {
       product.desc = this.goods.desc;
       product.price = this.goods.nowPrice;
       product.iid = this.iid;
-      this.$store.dispatch("addCarts", product).then((res) => console.log(res));
+      this.$store.dispatch("addCarts", product).then((res) => {
+        this.$toast.show(res);
+      });
     },
   },
 };
