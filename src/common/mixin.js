@@ -5,14 +5,14 @@ export const itemListenerMixin = {
   data() {
     return {
       itemImglistener: null,
-      refresh: null,
+      newRefresh: null,
     }
   },
   mounted() {
-    this.refresh = debounce(this.$refs.scroll.refresh);
+    this.newRefresh = debounce(this.$refs.scroll.refresh, 1000);
     // 对监听事件保存
     this.itemImglistener = () => {
-      this.refresh();
+      this.newRefresh();
     };
     this.$bus.$on("itemImgLoad", this.itemImglistener);
   },

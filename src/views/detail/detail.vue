@@ -17,7 +17,7 @@
       <detail-shop-info :shop="shop" />
       <detail-goods-info
         :detail-info="detailInfo"
-        @detailImgLoad="detailImgLoad"
+        @detailImgLoad="detailImgLoads"
       />
       <detail-param-info ref="param" :param-info="paramInfo" />
       <detail-comment-info ref="comment" :comment-info="commentInfo" />
@@ -157,8 +157,8 @@ export default {
       this.$refs.scroll.scrollTo(0, 0, 800);
     },
     // 监听详情图片加载完成
-    detailImgLoad() {
-      this.refresh();
+    detailImgLoads() {
+      this.newRefresh();
       this.getThemeTopY();
     },
     // 点击顶部导航栏跳转指定位置
@@ -175,7 +175,7 @@ export default {
       product.price = this.goods.nowPrice;
       product.iid = this.iid;
       this.$store.dispatch("addCarts", product).then((res) => {
-        this.$toast.show(res);
+        this.$toast.show("已添加至购物车");
       });
     },
   },

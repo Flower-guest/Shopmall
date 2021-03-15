@@ -28,9 +28,9 @@ export default {
     },
   },
   activated() {
-    setTimeout(() => {
+    this.$nextTick(() => {
       this.$refs.scroll.refresh();
-    }, 500);
+    });
   },
 };
 </script>
